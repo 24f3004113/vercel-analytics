@@ -1,27 +1,21 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Response
 import json
 import os
 import statistics
 
 app = FastAPI()
 
-# ✅ Proper CORS for all origins and POST
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 DATA_FILE = os.path.join(os.path.dirname(__file__), "telemetry.json")
 
 with open(DATA_FILE, "r") as f:
     data = json.load(f)
 
+
 @app.post("/")
-def analytics(payload: dict):
+def analytics(payload: dict, response: Response):
+    # ✅ Force CORS header
+    response.headers["Access-Control-Allow-Origin"] = "*"
+
     regions = payload.get("regions", [])
     threshold = payload.get("threshold_ms", 0)
 
