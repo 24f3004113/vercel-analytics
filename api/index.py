@@ -10,10 +10,9 @@ DATA_FILE = os.path.join(os.path.dirname(__file__), "telemetry.json")
 with open(DATA_FILE, "r") as f:
     data = json.load(f)
 
-
 @app.post("/")
 def analytics(payload: dict, response: Response):
-    # ✅ Force CORS header
+    # Required CORS header
     response.headers["Access-Control-Allow-Origin"] = "*"
 
     regions = payload.get("regions", [])
