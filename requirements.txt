@@ -1,1 +1,4 @@
 fastapi
+uvicorn                # helpful for local testing
+numpy
+pandas                 # easiest for loading/processing CSV/JSON data
